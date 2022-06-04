@@ -6,14 +6,14 @@ import { Links } from './Links'
 export const Search = () => {
   const [text, setText] = useState('Egypt');
   const { setSearchTerm } = useResultContext();
-  const { debounceValue } = useDebounce(text, 300);
+  const [ debounceValue ] = useDebounce(text, 300);
 
   useEffect(()=>{
-    if(debounceValue) setSearchTerm(debounceValue)
+    if(debounceValue) setSearchTerm(debounceValue);
   }, [debounceValue])
 
   return (
-    <div className='relative sm:ml-48 md:ml-72 sm:mt-10 mt-3'>
+    <div className='relative sm:ml-48 md:ml-72 sm:-mt-10 mt-3'>
       <input
         value={text}
         type='text'
@@ -21,6 +21,11 @@ export const Search = () => {
         placeholder='Search..'
         onChange={(e) => {setText(e.target.value)}}
       />
+      {text && (
+        <button type='button' className='absolute top-4 right-3' onClick={()=> setText('')}>
+          ✖
+        </button>
+      )}
       <Links />
     </div>
   )
